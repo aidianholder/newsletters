@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="braze" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/lib/signup.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/signup.js" />
+    </CLASSES>
+    <DOCUMENTATION>
+      <root url="https://js.appboycdn.com/web-sdk/latest/doc/modules/braze.html" />
+    </DOCUMENTATION>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
