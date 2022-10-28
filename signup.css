@@ -42,7 +42,7 @@
     padding: 1rem;
     background: var(--black);
     cursor: pointer;
-    visibility: hidden;
+    visibility: visible;
     opacity: 0;
     transition: all 0.35s ease-in;
 }

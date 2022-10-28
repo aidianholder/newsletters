@@ -30,17 +30,16 @@ function subscribeNewsletters() {
         }
         braze.getUser().setEmailNotificationSubscriptionType("opted_in")
     }
+
+    confirmationWindow(newsletterNames)
+
 }
 
-function confirmationWindow(newsletterNames){
-    if (screen.width <= 728) {
-        let left = (screen.width - 320) / 2;
-        let fsize = 10;
+function confirmationWindow(newslettersSuccess){
+    const ulBase = document.querySelector("#subsribeSuccessList")
+    for (nl in newslettersSuccess){
+        let newLI = document.createElement("li");
+        newLI.appendChild(document.createTextNode(nl));
+        ulBase.appendChild(newLI)
     }
-    else {
-        let left = (screen.width - 600) / 2;
-        let fsize = 12;
-    }
-
-
 }
