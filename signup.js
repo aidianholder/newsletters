@@ -35,11 +35,30 @@ function subscribeNewsletters() {
 
 }
 
+function hideModal(){
+    const modalBody = document.querySelector("#modal1")
+    modalBody.classList.remove("is-visible");
+    let ul = document.querySelector("#subscribedSuccessList")
+    while (ul.firstChild){
+        ul.removeChild(ul.firstChild)
+    }
+    const checkboxes = document.querySelectorAll(".sc-gqjmRU")
+    for (const checkbox of checkboxes) {
+        checkbox.checked = false
+    }
+}
+
+
 function confirmationWindow(newslettersSuccess){
-    const ulBase = document.querySelector("#subsribeSuccessList")
+    const ulBase = document.querySelector("#subscribedSuccessList")
     for (nl in newslettersSuccess){
         let newLI = document.createElement("li");
-        newLI.appendChild(document.createTextNode(nl));
+        newLI.appendChild(document.createTextNode(newslettersSuccess[nl]));
         ulBase.appendChild(newLI)
     }
+    const modalBody = document.querySelector("#modal1")
+    modalBody.classList.add("is-visible")
+    const modalClose = document.querySelector(".close-modal")
+    modalClose.addEventListener('click', hideModal)
+    modalBody.addEventListener('click', hideModal)
 }

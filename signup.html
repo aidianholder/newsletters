@@ -576,11 +576,21 @@
   </div>
 </div>
 
+<style>
+  .modal-header h2.modal-headline {font-size: 2em;}
+  .modal-content {margin: 1em; padding:1em;}
+  .modal-content p {font-size: 0.8em;}
+   ul#subscribedSuccessList {list-style-type: disc;}
+   ul#subscribedSuccessList li {margin-top: 0.5em;}
+
+
+</style>
+
 
 <div class="modal" id="modal1">
   <div class="modal-dialog">
     <header class="modal-header">
-      <h2>Success!</h2>
+      <h2 class="modal-headline">Success!</h2>
       <button class="close-modal" aria-label="close modal" data-close>✕</button>
     </header>
     <section class="modal-content">
@@ -589,9 +599,9 @@
 
 
         </ul>
+      <p>Your new newsletters should start arriving shortly.</p>
 
     </section>
-    <footer class="modal-footer">...</footer>
   </div>
 </div>
 
@@ -602,72 +612,7 @@
   WebFont.load({ google: { families: ["Lato:900:latin", "Lato:300:latin", "Playfair+Display:700italic:latin", "Merriweather:700:latin", "Crete+Round::latin", "PT+Sans+Narrow:700:latin"] } });
 </script>
 
-<script>
 
-  braze.initialize('8a7ba213-9ea9-44a6-9d6b-0a76855feae8', {
-    baseUrl: 'sdk.iad-05.braze.com',
-    "allowUserSuppliedJavascript": true,
-    "enableLogging": true,
-  });
-
-
-
-  function subscribeNewsletters() {
-    let subscribeList = Array()
-    let newsletterNames = Array()
-    const checkboxes = document.querySelectorAll(".sc-gqjmRU")
-    for (const checkbox of checkboxes) {
-      if (checkbox.checked) {
-        subscribeList.push(checkbox.value)
-        newsletterNames.push(checkbox.name)
-      }
-    }
-    if (subscribeList.length > 0) {
-      for (const newsletterID in subscribeList) {
-        braze.getUser().addToSubscriptionGroup(newsletterID)
-      }
-      braze.getUser().setEmailNotificationSubscriptionType("opted_in")
-    }
-
-    console.log(newsletterNames)
-    confirmationWindow(newsletterNames)
-
-  }
-
-  function hideModal(){
-    const modalBody = document.querySelector("#modal1")
-    modalBody.classList.remove("is-visible");
-    let ul = document.querySelector("#subscribedSuccessList")
-    while (ul.firstChild){
-      ul.removeChild(ul.firstChild)
-    }
-
-  }
-
-  function confirmationWindow(newslettersSuccess){
-    const ulBase = document.querySelector("#subscribedSuccessList")
-    for (nl in newslettersSuccess){
-      let newLI = document.createElement("li");
-      newLI.appendChild(document.createTextNode(newslettersSuccess[nl]));
-      ulBase.appendChild(newLI)
-    }
-    const modalBody = document.querySelector("#modal1")
-    modalBody.classList.add("is-visible")
-    const modalClose = document.querySelector(".close-modal")
-    modalClose.addEventListener('click', hideModal)
-    modalBody.addEventListener('click', hideModal)
-  }
-
-
-  const formButton = document.querySelector("#signupButton")
-  formButton.addEventListener('click', subscribeClick)
-
-  function subscribeClick(event){
-    event.preventDefault();
-    subscribeNewsletters()
-  }
-
-</script>
 
 
 
