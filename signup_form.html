@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        h1.formTitle {font-size: 24px; text-align:center; letter-spacing: -1px; line-height: 1.17; font-weight: 900; font-family: Lato, sans-serif; color: rgb(67, 77, 93); padding:1rem;}
+        .formBackground {background: rgb(255,255,255); border-radius: 0.3125rem; max-width: 35.25rem; margin: 0 auto; padding: 2.5rem 2.75rem; position: relative;}
+        .formBody {line-height: 1.1875; font-family: Lato, sans-serif; color: #999; }
+        .test-grid {max-width: 900px; display: flex; justify-content: start; gap: 3px; align-items: baseline;}
+        div.test-grid input {min-height: unset;}
+        .modal {visibility: hidden; opacity: 0; transition: all 0.35s ease-in;}
+        .modal.is-visible {visibility: visibile; opacity: 1;}
+        #newsletters {margin-bottom: 2rem;padding:1rem;}
+        #signupButton {background-color: rgb(2, 116, 183);border: none;border-radius: 3px;color: rgb(255, 255, 255);display: inline-block;font-family: Helvetica, Arial, sans-serif;font-size: 1rem;font-style: normal;font-weight: 700;line-height: 1;outline: 0px;padding: 0.75rem 1.5rem;text-decoration: none;transition: background-color 0.1s ease-in 0s, box-shadow 0.1s ease-in 0s; box-shadow: 0 0 .25rem rgba(51,51,51,.2);height: 2.5rem;}
+        .modal {position: fixed;top: 0;left: 0;right: 0;bottom: 0;display: flex;align-items: center;justify-content: center;padding: 1rem;background: rgba(0,0,0,0.8);cursor: pointer;visibility: visible;opacity: 0;transition: all 0.35s ease-in;}
+        .modal-dialog {position: relative;max-width: 800px;max-height: 80vh;border-radius: 5px;background: rgba(255,255,255,1);overflow: auto;cursor: default; font-family: Lato, sans-serif;}
+        .modal-dialog > * {padding: 1rem;}
+        .modal-header {background-color:#cdcdcd;}
+        .modal-header {display: flex;align-items: center;justify-content: space-between;}
+        .modal-header .close-modal {font-size: 1.5rem;margin-block-start: 0.5rem; margin-block-end:0.5rem;}
+        .close-modal {cursor:pointer;}
+        .modal p + p {margin-top: 1rem;}
+        .modal {visibility: hidden;opacity: 0;transition: all 0.35s ease-in;}
+        .modal.is-visible {visibility: visible;opacity: 1;}
+
+    </style>
+    <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/scripts/handlebars-v4.7.7.js"></script>
+    <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/scripts/TFP_newsletters.js"></script>
+    <script type="text/javascript">
+        +function(a,p,P,b,y){a.braze={};a.brazeQueue=[];for(var s="BrazeSdkMetadata DeviceProperties Card Card.prototype.dismissCard Card.prototype.removeAllSubscriptions Card.prototype.removeSubscription Card.prototype.subscribeToClickedEvent Card.prototype.subscribeToDismissedEvent Card.fromContentCardsJson Banner CaptionedImage ClassicCard ControlCard ContentCards ContentCards.prototype.getUnviewedCardCount Feed Feed.prototype.getUnreadCardCount ControlMessage InAppMessage InAppMessage.SlideFrom InAppMessage.ClickAction InAppMessage.DismissType InAppMessage.OpenTarget InAppMessage.ImageStyle InAppMessage.Orientation InAppMessage.TextAlignment InAppMessage.CropType InAppMessage.prototype.closeMessage InAppMessage.prototype.removeAllSubscriptions InAppMessage.prototype.removeSubscription InAppMessage.prototype.subscribeToClickedEvent InAppMessage.prototype.subscribeToDismissedEvent InAppMessage.fromJson FullScreenMessage ModalMessage HtmlMessage SlideUpMessage User User.Genders User.NotificationSubscriptionTypes User.prototype.addAlias User.prototype.addToCustomAttributeArray User.prototype.addToSubscriptionGroup User.prototype.getUserId User.prototype.incrementCustomUserAttribute User.prototype.removeFromCustomAttributeArray User.prototype.removeFromSubscriptionGroup User.prototype.setCountry User.prototype.setCustomLocationAttribute User.prototype.setCustomUserAttribute User.prototype.setDateOfBirth User.prototype.setEmail User.prototype.setEmailNotificationSubscriptionType User.prototype.setFirstName User.prototype.setGender User.prototype.setHomeCity User.prototype.setLanguage User.prototype.setLastKnownLocation User.prototype.setLastName User.prototype.setPhoneNumber User.prototype.setPushNotificationSubscriptionType InAppMessageButton InAppMessageButton.prototype.removeAllSubscriptions InAppMessageButton.prototype.removeSubscription InAppMessageButton.prototype.subscribeToClickedEvent automaticallyShowInAppMessages destroyFeed hideContentCards showContentCards showFeed showInAppMessage toggleContentCards toggleFeed changeUser destroy getDeviceId initialize isPushBlocked isPushPermissionGranted isPushSupported logCardClick logCardDismissal logCardImpressions logContentCardImpressions logContentCardsDisplayed logCustomEvent logFeedDisplayed logInAppMessageButtonClick logInAppMessageClick logInAppMessageHtmlClick logInAppMessageImpression logPurchase openSession requestPushPermission removeAllSubscriptions removeSubscription requestContentCardsRefresh requestFeedRefresh requestImmediateDataFlush enableSDK isDisabled setLogger setSdkAuthenticationSignature addSdkMetadata disableSDK subscribeToContentCardsUpdates subscribeToFeedUpdates subscribeToInAppMessage subscribeToSdkAuthenticationFailures toggleLogging unregisterPush wipeData handleBrazeAction".split(" "),i=0;i<s.length;i++){for(var m=s[i],k=a.braze,l=m.split("."),j=0;j<l.length-1;j++)k=k[l[j]];k[l[j]]=(new Function("return function "+m.replace(/\./g,"_")+"(){window.brazeQueue.push(arguments); return true}"))()}window.braze.getCachedContentCards=function(){return new window.braze.ContentCards};window.braze.getCachedFeed=function(){return new window.braze.Feed};window.braze.getUser=function(){return new window.braze.User};(y=p.createElement(P)).type='text/javascript';
+            y.src='https://js.appboycdn.com/web-sdk/4.3/braze.min.js';
+            y.async=1;(b=p.getElementsByTagName(P)[0]).parentNode.insertBefore(y,b)
+        }(window,document,'script');
+    </script>
+
+</head>
+<body>
+<h1 class="formTitle">Take staying informed a step further.  Sign up for our email newsletters.</h1>
+<div class="formBackground">
+
+    <div>
+        <form class="formBody">
+            <div style="margin-bottom: 1rem;">
+                <label size="0.875rem" color="#5d5d65">Email <span>*</span></label>
+                <input autocomplete="Email" name="Email" id="fieldEmail" maxlength="200" required type="email" style="width:100%;"/>
+            </div>
+
+            <div id="newsletters">
+
+
+            </div>
+            <button size="1rem" color="#fff" id='signupButton' type="submit">Sign up</button>
+        </form>
+    </div>
+
+
+</div>
+
+
+<div class="modal" id="modal1">
+    <div class="modal-dialog">
+        <header class="modal-header">
+            <h2 class="modal-headline">Success!</h2>
+            <button class="close-modal" aria-label="close modal" data-close>✕</button>
+        </header>
+        <section class="modal-content">
+            <p>You've signed up for:</p>
+            <ul id="subscribedSuccessList">
+
+
+            </ul>
+            <p>Your new newsletters should start arriving shortly.</p>
+
+        </section>
+    </div>
+</div>
+
+<script id="newsletterDiv" type="text/x-handlebars-template">
+
+    {{#each this}}
+    <div size="small" >
+        <div class="test-grid">
+            <input type="checkbox" name="{{newsletterName}}" value="{{subscriptionGroupID}}" class="checkboxSelector" >
+            <label size="0.875rem" color="#5d5d65">{{newsletterName}}</label>
+        </div>
+    </div>
+    {{/each}}
+
+</script>
+
+<script type="text/javascript">
+    window.onload = function() {
+        let template = document.getElementById('newsletterDiv').innerHTML;
+        let compiled_template = Handlebars.compile(template);
+        let rendered = compiled_template(newsletterDetails);
+        document.getElementById("newsletters").innerHTML = rendered
+    };
+</script>
+
+<script>
+    braze.initialize('8a7ba213-9ea9-44a6-9d6b-0a76855feae8', {
+        baseUrl: 'sdk.iad-05.braze.com',
+        "allowUserSuppliedJavascript": true,
+        "enableLogging": true,
+    });
+
+    let formButton = document.querySelector("#signupButton")
+    formButton.addEventListener('click', subscribeClick)
+
+    function subscribeClick(event){
+        event.preventDefault();
+        subscribeNewsletters()
+    }
+
+    function subscribeNewsletters() {
+        let subscribeList = Array()
+        let newsletterNames = Array()
+        const checkboxes = document.querySelectorAll(".checkboxSelector")
+        for (const checkbox of checkboxes) {
+            if (checkbox.checked) {
+                subscribeList.push(checkbox.value)
+                newsletterNames.push(checkbox.name)
+            }
+        }
+        if (subscribeList.length > 0 && document.querySelector("#fieldEmail").value != '') {
+            for (const newsletterID in subscribeList) {
+                braze.getUser().addToSubscriptionGroup(newsletterID)
+            }
+            braze.getUser().setEmailNotificationSubscriptionType("opted_in")
+            confirmationWindow(newsletterNames)
+        }
+    }
+
+    function hideModal(){
+        const modalBody = document.querySelector("#modal1")
+        modalBody.classList.remove("is-visible");
+        let ul = document.querySelector("#subscribedSuccessList")
+        while (ul.firstChild){
+            ul.removeChild(ul.firstChild)
+        }
+        const checkboxes = document.querySelectorAll(".checkboxSelector")
+        for (const checkbox of checkboxes) {
+            checkbox.checked = false
+        }
+        document.querySelector("#fieldEmail").value = ''
+    }
+
+
+    function confirmationWindow(newslettersSuccess){
+        const ulBase = document.querySelector("#subscribedSuccessList")
+        for (nl in newslettersSuccess){
+            let newLI = document.createElement("li");
+            newLI.appendChild(document.createTextNode(newslettersSuccess[nl]));
+            ulBase.appendChild(newLI)
+        }
+        const modalBody = document.querySelector("#modal1")
+        modalBody.classList.add("is-visible")
+        const modalClose = document.querySelector(".close-modal")
+        modalClose.addEventListener('click', hideModal)
+        modalBody.addEventListener('click', hideModal)
+    }
+
+
+</script>
+
+
+
+</body>
+</html>
