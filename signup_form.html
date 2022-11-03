@@ -7,8 +7,8 @@
 
         h1.formTitle {font-size: 24px; text-align:center; letter-spacing: -1px; line-height: 1.17; font-weight: 900; font-family: Lato, sans-serif; color: rgb(67, 77, 93); padding:1rem;}
         .formBackground {background: rgb(255,255,255); border-radius: 0.3125rem; max-width: 35.25rem; margin: 0 auto; padding: 2.5rem 2.75rem; position: relative;}
-        .formBody {line-height: 1.1875; font-family: Lato, sans-serif; color: #999; }
-        .test-grid {max-width: 900px; display: flex; justify-content: start; gap: 3px; align-items: baseline;}
+        .formBody {line-height: 1.1875; font-family: Lato, sans-serif; color: #6b6b6b; }
+        .test-grid {max-width: 900px; display: flex; justify-content: start; gap: 3px; align-items: baseline; margin-bottom: 1rem;}
         div.test-grid input {min-height: unset;}
         .modal {visibility: hidden; opacity: 0; transition: all 0.35s ease-in;}
         .modal.is-visible {visibility: visibile; opacity: 1;}
@@ -24,10 +24,12 @@
         .modal p + p {margin-top: 1rem;}
         .modal {visibility: hidden;opacity: 0;transition: all 0.35s ease-in;}
         .modal.is-visible {visibility: visible;opacity: 1;}
+        p.newsletterCopy {margin-top:0;}
+        .newsletterWrapper {border-bottom: rgba(201,201,201,0.7) 1px solid; margin-bottom: 1rem;padding-bottom: 1rem;}
 
     </style>
     <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/scripts/handlebars-v4.7.7.js"></script>
-    <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/scripts/TFP_newsletters.js"></script>
+    <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/newsletter_details/texarkana_newsletters.js"></script>
     <script type="text/javascript">
         +function(a,p,P,b,y){a.braze={};a.brazeQueue=[];for(var s="BrazeSdkMetadata DeviceProperties Card Card.prototype.dismissCard Card.prototype.removeAllSubscriptions Card.prototype.removeSubscription Card.prototype.subscribeToClickedEvent Card.prototype.subscribeToDismissedEvent Card.fromContentCardsJson Banner CaptionedImage ClassicCard ControlCard ContentCards ContentCards.prototype.getUnviewedCardCount Feed Feed.prototype.getUnreadCardCount ControlMessage InAppMessage InAppMessage.SlideFrom InAppMessage.ClickAction InAppMessage.DismissType InAppMessage.OpenTarget InAppMessage.ImageStyle InAppMessage.Orientation InAppMessage.TextAlignment InAppMessage.CropType InAppMessage.prototype.closeMessage InAppMessage.prototype.removeAllSubscriptions InAppMessage.prototype.removeSubscription InAppMessage.prototype.subscribeToClickedEvent InAppMessage.prototype.subscribeToDismissedEvent InAppMessage.fromJson FullScreenMessage ModalMessage HtmlMessage SlideUpMessage User User.Genders User.NotificationSubscriptionTypes User.prototype.addAlias User.prototype.addToCustomAttributeArray User.prototype.addToSubscriptionGroup User.prototype.getUserId User.prototype.incrementCustomUserAttribute User.prototype.removeFromCustomAttributeArray User.prototype.removeFromSubscriptionGroup User.prototype.setCountry User.prototype.setCustomLocationAttribute User.prototype.setCustomUserAttribute User.prototype.setDateOfBirth User.prototype.setEmail User.prototype.setEmailNotificationSubscriptionType User.prototype.setFirstName User.prototype.setGender User.prototype.setHomeCity User.prototype.setLanguage User.prototype.setLastKnownLocation User.prototype.setLastName User.prototype.setPhoneNumber User.prototype.setPushNotificationSubscriptionType InAppMessageButton InAppMessageButton.prototype.removeAllSubscriptions InAppMessageButton.prototype.removeSubscription InAppMessageButton.prototype.subscribeToClickedEvent automaticallyShowInAppMessages destroyFeed hideContentCards showContentCards showFeed showInAppMessage toggleContentCards toggleFeed changeUser destroy getDeviceId initialize isPushBlocked isPushPermissionGranted isPushSupported logCardClick logCardDismissal logCardImpressions logContentCardImpressions logContentCardsDisplayed logCustomEvent logFeedDisplayed logInAppMessageButtonClick logInAppMessageClick logInAppMessageHtmlClick logInAppMessageImpression logPurchase openSession requestPushPermission removeAllSubscriptions removeSubscription requestContentCardsRefresh requestFeedRefresh requestImmediateDataFlush enableSDK isDisabled setLogger setSdkAuthenticationSignature addSdkMetadata disableSDK subscribeToContentCardsUpdates subscribeToFeedUpdates subscribeToInAppMessage subscribeToSdkAuthenticationFailures toggleLogging unregisterPush wipeData handleBrazeAction".split(" "),i=0;i<s.length;i++){for(var m=s[i],k=a.braze,l=m.split("."),j=0;j<l.length-1;j++)k=k[l[j]];k[l[j]]=(new Function("return function "+m.replace(/\./g,"_")+"(){window.brazeQueue.push(arguments); return true}"))()}window.braze.getCachedContentCards=function(){return new window.braze.ContentCards};window.braze.getCachedFeed=function(){return new window.braze.Feed};window.braze.getUser=function(){return new window.braze.User};(y=p.createElement(P)).type='text/javascript';
             y.src='https://js.appboycdn.com/web-sdk/4.3/braze.min.js';
@@ -80,12 +82,15 @@
 <script id="newsletterDiv" type="text/x-handlebars-template">
 
     {{#each this}}
-    <div size="small" >
-        <div class="test-grid">
-            <input type="checkbox" name="{{newsletterName}}" value="{{subscriptionGroupID}}" class="checkboxSelector" >
-            <label size="0.875rem" color="#5d5d65">{{newsletterName}}</label>
+        <div class='newsletterWrapper' size="small" >
+            <div class="test-grid">
+                <input type="checkbox" name="{{newsletterName}}" value="{{subscriptionGroupID}}" class="checkboxSelector" >
+                <label size="0.875rem" color="#5d5d65">{{newsletterName}}</label>
+            </div>
+            {{#if this.newsletterCopy}}
+                <p class="newsletterCopy">{{this.newsletterCopy}}</p>
+            {{/if}}
         </div>
-    </div>
     {{/each}}
 
 </script>
@@ -106,51 +111,61 @@
         "enableLogging": true,
     });
 
-    let formButton = document.querySelector("#signupButton")
-    formButton.addEventListener('click', subscribeClick)
 
-    function subscribeClick(event){
-        event.preventDefault();
-        subscribeNewsletters()
-    }
+    let handleSignup = {}
 
-    function subscribeNewsletters() {
-        let subscribeList = Array()
-        let newsletterNames = Array()
+    handleSignup.subscribeList = Array()
+    handleSignup.newsletterNames = Array()
+
+    handleSignup.formButton = document.querySelector("#signupButton")
+    handleSignup.formButton.addEventListener('click', function(evt) {
+        evt.preventDefault();
+        handleSignup.subscribeNewsletters()
+        console.log(handleSignup)
+    })
+
+
+    handleSignup.subscribeNewsletters = function() {
+        //let subscribeList = Array()
+        //let newsletterNames = Array()
         const checkboxes = document.querySelectorAll(".checkboxSelector")
         for (const checkbox of checkboxes) {
             if (checkbox.checked) {
-                subscribeList.push(checkbox.value)
-                newsletterNames.push(checkbox.name)
+                handleSignup.subscribeList.push(checkbox.value)
+                handleSignup.newsletterNames.push(checkbox.name)
             }
         }
-        if (subscribeList.length > 0 && document.querySelector("#fieldEmail").value != '') {
-            for (const newsletterID in subscribeList) {
+        if (handleSignup.subscribeList.length > 0 && document.querySelector("#fieldEmail").value != '') {
+            for (const newsletterID in handleSignup.subscribeList) {
                 braze.getUser().addToSubscriptionGroup(newsletterID)
             }
+            braze.getUser().setEmail(document.querySelector("#fieldEmail").value)
             braze.getUser().setEmailNotificationSubscriptionType("opted_in")
-            confirmationWindow(newsletterNames)
+            handleSignup.confirmationWindow(handleSignup.newsletterNames)
         }
     }
 
-    function hideModal(){
+    handleSignup.hideModal = function() {
         const modalBody = document.querySelector("#modal1")
         modalBody.classList.remove("is-visible");
         let ul = document.querySelector("#subscribedSuccessList")
-        while (ul.firstChild){
+        while (ul.firstChild) {
             ul.removeChild(ul.firstChild)
         }
         const checkboxes = document.querySelectorAll(".checkboxSelector")
         for (const checkbox of checkboxes) {
             checkbox.checked = false
         }
+        if (td !== null) {
+            td.trackEvent("form_signup", document.querySelector("#fieldEmail").value)
+        }
         document.querySelector("#fieldEmail").value = ''
     }
 
 
-    function confirmationWindow(newslettersSuccess){
+    handleSignup.confirmationWindow = function(newslettersSuccess) {
         const ulBase = document.querySelector("#subscribedSuccessList")
-        for (nl in newslettersSuccess){
+        for (let nl in newslettersSuccess) {
             let newLI = document.createElement("li");
             newLI.appendChild(document.createTextNode(newslettersSuccess[nl]));
             ulBase.appendChild(newLI)
@@ -158,9 +173,10 @@
         const modalBody = document.querySelector("#modal1")
         modalBody.classList.add("is-visible")
         const modalClose = document.querySelector(".close-modal")
-        modalClose.addEventListener('click', hideModal)
-        modalBody.addEventListener('click', hideModal)
+        modalClose.addEventListener('click', handleSignup.hideModal)
+        modalBody.addEventListener('click', handleSignup.hideModal)
     }
+
 
 
 </script>
