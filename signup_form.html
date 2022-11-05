@@ -157,9 +157,25 @@
             checkbox.checked = false
         }
         if (td !== null) {
-            td.trackEvent("form_signup", document.querySelector("#fieldEmail").value)
+            payload = handleSignup.build_payload()
+            /**do we ned to specify database in parameter?  How?**/
+            td.trackEvent("form_signup", handleSignup.buildPayload)
         }
-        document.querySelector("#fieldEmail").value = ''
+        document.querySelector("#fieldEmail").value = '';
+        handleSignup.subscribeList.length = 0;
+        handleSignup.newsletterNames.length = 0;
+    }
+
+
+    handleSignup.buildPayload = function() {
+        let emailAddress, url, host, auth0_id, newsletters, payload
+        emailAddress = document.querySelector("#fieldEmail").value
+        url = window.location.href
+        host = window.location.host
+        auth0_id = td.clinets.globals.pageviews.auth0_id
+        newsletters = handleSignup.newsletterNames
+        payload = {'email': emailAddress, 'url': url, 'host': host, 'auth0_id': auth0_id, newsletters}
+        return payload
     }
 
 
