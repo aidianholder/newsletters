@@ -13,7 +13,7 @@
         .modal {visibility: hidden; opacity: 0; transition: all 0.35s ease-in;}
         .modal.is-visible {visibility: visibile; opacity: 1;}
         #newsletters {margin-bottom: 2rem;padding:1rem;}
-        #signupButton {background-color: rgb(2, 116, 183);border: none;border-radius: 3px;color: rgb(255, 255, 255);display: inline-block;font-family: Helvetica, Arial, sans-serif;font-size: 1rem;font-style: normal;font-weight: 700;line-height: 1;outline: 0px;padding: 0.75rem 1.5rem;text-decoration: none;transition: background-color 0.1s ease-in 0s, box-shadow 0.1s ease-in 0s; box-shadow: 0 0 .25rem rgba(51,51,51,.2);height: 2.5rem;}
+        #signupButton {background-color: rgb(2, 116, 183);border: none;border-radius: 3px;color: rgb(255, 255, 255);display: inline-block;font-family: Helvetica, Arial, sans-serif;font-size: 1rem;font-style: normal;font-weight: 700;line-height: 1;outline: 0;padding: 0.75rem 1.5rem;text-decoration: none;transition: background-color 0.1s ease-in 0s, box-shadow 0.1s ease-in 0s; box-shadow: 0 0 .25rem rgba(51,51,51,.2);height: 2.5rem;}
         .modal {position: fixed;top: 0;left: 0;right: 0;bottom: 0;display: flex;align-items: center;justify-content: center;padding: 1rem;background: rgba(0,0,0,0.8);cursor: pointer;visibility: visible;opacity: 0;transition: all 0.35s ease-in;}
         .modal-dialog {position: relative;max-width: 800px;max-height: 80vh;border-radius: 5px;background: rgba(255,255,255,1);overflow: auto;cursor: default; font-family: Lato, sans-serif;}
         .modal-dialog > * {padding: 1rem;}
@@ -28,8 +28,21 @@
         .newsletterWrapper {border-bottom: rgba(201,201,201,0.7) 1px solid; margin-bottom: 1rem;padding-bottom: 1rem;}
 
     </style>
+    <script>
+
+
+    </script>
+
     <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/scripts/handlebars-v4.7.7.js"></script>
-    <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/newsletter_details/texarkana_newsletters.js"></script>
+    <script>
+        let site = window.location.host.split('.')[1]
+        let scriptSource = "https://wehco.media.clients.ellingtoncms.com/static-4/newsletter_details/" + site + "_newsletters.js"
+        jsElement = document.createElement('script')
+        jsElement.src = scriptSource
+        document.getElementsByTagName('head')[0].appendChild(jsElement)
+    </script>
+
+    <!--<script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/newsletter_details/texarkana_newsletters.js"></script>-->
     <script type="text/javascript">
         +function(a,p,P,b,y){a.braze={};a.brazeQueue=[];for(var s="BrazeSdkMetadata DeviceProperties Card Card.prototype.dismissCard Card.prototype.removeAllSubscriptions Card.prototype.removeSubscription Card.prototype.subscribeToClickedEvent Card.prototype.subscribeToDismissedEvent Card.fromContentCardsJson Banner CaptionedImage ClassicCard ControlCard ContentCards ContentCards.prototype.getUnviewedCardCount Feed Feed.prototype.getUnreadCardCount ControlMessage InAppMessage InAppMessage.SlideFrom InAppMessage.ClickAction InAppMessage.DismissType InAppMessage.OpenTarget InAppMessage.ImageStyle InAppMessage.Orientation InAppMessage.TextAlignment InAppMessage.CropType InAppMessage.prototype.closeMessage InAppMessage.prototype.removeAllSubscriptions InAppMessage.prototype.removeSubscription InAppMessage.prototype.subscribeToClickedEvent InAppMessage.prototype.subscribeToDismissedEvent InAppMessage.fromJson FullScreenMessage ModalMessage HtmlMessage SlideUpMessage User User.Genders User.NotificationSubscriptionTypes User.prototype.addAlias User.prototype.addToCustomAttributeArray User.prototype.addToSubscriptionGroup User.prototype.getUserId User.prototype.incrementCustomUserAttribute User.prototype.removeFromCustomAttributeArray User.prototype.removeFromSubscriptionGroup User.prototype.setCountry User.prototype.setCustomLocationAttribute User.prototype.setCustomUserAttribute User.prototype.setDateOfBirth User.prototype.setEmail User.prototype.setEmailNotificationSubscriptionType User.prototype.setFirstName User.prototype.setGender User.prototype.setHomeCity User.prototype.setLanguage User.prototype.setLastKnownLocation User.prototype.setLastName User.prototype.setPhoneNumber User.prototype.setPushNotificationSubscriptionType InAppMessageButton InAppMessageButton.prototype.removeAllSubscriptions InAppMessageButton.prototype.removeSubscription InAppMessageButton.prototype.subscribeToClickedEvent automaticallyShowInAppMessages destroyFeed hideContentCards showContentCards showFeed showInAppMessage toggleContentCards toggleFeed changeUser destroy getDeviceId initialize isPushBlocked isPushPermissionGranted isPushSupported logCardClick logCardDismissal logCardImpressions logContentCardImpressions logContentCardsDisplayed logCustomEvent logFeedDisplayed logInAppMessageButtonClick logInAppMessageClick logInAppMessageHtmlClick logInAppMessageImpression logPurchase openSession requestPushPermission removeAllSubscriptions removeSubscription requestContentCardsRefresh requestFeedRefresh requestImmediateDataFlush enableSDK isDisabled setLogger setSdkAuthenticationSignature addSdkMetadata disableSDK subscribeToContentCardsUpdates subscribeToFeedUpdates subscribeToInAppMessage subscribeToSdkAuthenticationFailures toggleLogging unregisterPush wipeData handleBrazeAction".split(" "),i=0;i<s.length;i++){for(var m=s[i],k=a.braze,l=m.split("."),j=0;j<l.length-1;j++)k=k[l[j]];k[l[j]]=(new Function("return function "+m.replace(/\./g,"_")+"(){window.brazeQueue.push(arguments); return true}"))()}window.braze.getCachedContentCards=function(){return new window.braze.ContentCards};window.braze.getCachedFeed=function(){return new window.braze.Feed};window.braze.getUser=function(){return new window.braze.User};(y=p.createElement(P)).type='text/javascript';
             y.src='https://js.appboycdn.com/web-sdk/4.3/braze.min.js';
@@ -117,6 +130,8 @@
     handleSignup.subscribeList = Array()
     handleSignup.newsletterNames = Array()
 
+    //const checkboxes = document.querySelectorAll(".checkboxSelector")
+
     handleSignup.formButton = document.querySelector("#signupButton")
     handleSignup.formButton.addEventListener('click', function(evt) {
         evt.preventDefault();
@@ -126,6 +141,7 @@
 
 
     handleSignup.subscribeNewsletters = function() {
+        let userEmail
         //let subscribeList = Array()
         //let newsletterNames = Array()
         const checkboxes = document.querySelectorAll(".checkboxSelector")
@@ -135,29 +151,29 @@
                 handleSignup.newsletterNames.push(checkbox.name)
             }
         }
-        if (handleSignup.subscribeList.length > 0 && document.querySelector("#fieldEmail").value != '') {
+        userEmail = document.querySelector("#fieldEmail").value
+        if (handleSignup.subscribeList.length > 0 && handleSignup.emailIsValid(userEmail))
             for (const newsletterID in handleSignup.subscribeList) {
                 braze.getUser().addToSubscriptionGroup(newsletterID)
             }
             braze.getUser().setEmail(document.querySelector("#fieldEmail").value)
             braze.getUser().setEmailNotificationSubscriptionType("opted_in")
             handleSignup.confirmationWindow(handleSignup.newsletterNames)
-        }
     }
 
     handleSignup.hideModal = function() {
+        let sul
         const modalBody = document.querySelector("#modal1")
         modalBody.classList.remove("is-visible");
-        let ul = document.querySelector("#subscribedSuccessList")
-        while (ul.firstChild) {
-            ul.removeChild(ul.firstChild)
+        sul = document.querySelector("#subscribedSuccessList")
+        while (sul.firstChild) {
+            sul.removeChild(sul.firstChild)
         }
         const checkboxes = document.querySelectorAll(".checkboxSelector")
         for (const checkbox of checkboxes) {
             checkbox.checked = false
         }
         if (td !== null) {
-            payload = handleSignup.build_payload()
             /**do we ned to specify database in parameter?  How?**/
             td.trackEvent("form_signup", handleSignup.buildPayload)
         }
@@ -191,6 +207,10 @@
         const modalClose = document.querySelector(".close-modal")
         modalClose.addEventListener('click', handleSignup.hideModal)
         modalBody.addEventListener('click', handleSignup.hideModal)
+    }
+
+    handleSignup.emailIsValid = function(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }
 
 
