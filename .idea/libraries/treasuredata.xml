@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="treasuredata" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/lib/td-js-sdk-master/dist/td.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/td-js-sdk-master/dist/td.js" />
+    </CLASSES>
+    <DOCUMENTATION>
+      <root url="https://docs.treasuredata.com/display/public/PD/Treasure+Data+JavaScript+SDK+API+Version+3+Reference" />
+    </DOCUMENTATION>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

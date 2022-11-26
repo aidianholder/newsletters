@@ -3,11 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .submit-button {
+            background-color: rgb(2, 116, 183);
+            border: none;
+            border-radius: 3px;
+            color: rgb(255, 255, 255);
+            display: inline-block;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1;
+            outline: 0;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            transition: background-color 0.1s ease-in 0s, box-shadow 0.1s ease-in 0s;
+            box-shadow: 0 0 .25rem rgba(51,51,51,.2);
+            height: 2.5rem;
+        }
+
+        .email-input {
+            margin-bottom: 1rem;
+
+
+        }
+
+    </style>
+
 </head>
 <body>
 
-</body>
-</html>
+
 <script type="text/javascript">
     +function(a,p,P,b,y){a.braze={};a.brazeQueue=[];for(var s="BrazeSdkMetadata DeviceProperties Card Card.prototype.dismissCard Card.prototype.removeAllSubscriptions Card.prototype.removeSubscription Card.prototype.subscribeToClickedEvent Card.prototype.subscribeToDismissedEvent Card.fromContentCardsJson Banner CaptionedImage ClassicCard ControlCard ContentCards ContentCards.prototype.getUnviewedCardCount Feed Feed.prototype.getUnreadCardCount ControlMessage InAppMessage InAppMessage.SlideFrom InAppMessage.ClickAction InAppMessage.DismissType InAppMessage.OpenTarget InAppMessage.ImageStyle InAppMessage.Orientation InAppMessage.TextAlignment InAppMessage.CropType InAppMessage.prototype.closeMessage InAppMessage.prototype.removeAllSubscriptions InAppMessage.prototype.removeSubscription InAppMessage.prototype.subscribeToClickedEvent InAppMessage.prototype.subscribeToDismissedEvent InAppMessage.fromJson FullScreenMessage ModalMessage HtmlMessage SlideUpMessage User User.Genders User.NotificationSubscriptionTypes User.prototype.addAlias User.prototype.addToCustomAttributeArray User.prototype.addToSubscriptionGroup User.prototype.getUserId User.prototype.incrementCustomUserAttribute User.prototype.removeFromCustomAttributeArray User.prototype.removeFromSubscriptionGroup User.prototype.setCountry User.prototype.setCustomLocationAttribute User.prototype.setCustomUserAttribute User.prototype.setDateOfBirth User.prototype.setEmail User.prototype.setEmailNotificationSubscriptionType User.prototype.setFirstName User.prototype.setGender User.prototype.setHomeCity User.prototype.setLanguage User.prototype.setLastKnownLocation User.prototype.setLastName User.prototype.setPhoneNumber User.prototype.setPushNotificationSubscriptionType InAppMessageButton InAppMessageButton.prototype.removeAllSubscriptions InAppMessageButton.prototype.removeSubscription InAppMessageButton.prototype.subscribeToClickedEvent automaticallyShowInAppMessages destroyFeed hideContentCards showContentCards showFeed showInAppMessage toggleContentCards toggleFeed changeUser destroy getDeviceId initialize isPushBlocked isPushPermissionGranted isPushSupported logCardClick logCardDismissal logCardImpressions logContentCardImpressions logContentCardsDisplayed logCustomEvent logFeedDisplayed logInAppMessageButtonClick logInAppMessageClick logInAppMessageHtmlClick logInAppMessageImpression logPurchase openSession requestPushPermission removeAllSubscriptions removeSubscription requestContentCardsRefresh requestFeedRefresh requestImmediateDataFlush enableSDK isDisabled setLogger setSdkAuthenticationSignature addSdkMetadata disableSDK subscribeToContentCardsUpdates subscribeToFeedUpdates subscribeToInAppMessage subscribeToSdkAuthenticationFailures toggleLogging unregisterPush wipeData handleBrazeAction".split(" "),i=0;i<s.length;i++){for(var m=s[i],k=a.braze,l=m.split("."),j=0;j<l.length-1;j++)k=k[l[j]];k[l[j]]=(new Function("return function "+m.replace(/\./g,"_")+"(){window.brazeQueue.push(arguments); return true}"))()}window.braze.getCachedContentCards=function(){return new window.braze.ContentCards};window.braze.getCachedFeed=function(){return new window.braze.Feed};window.braze.getUser=function(){return new window.braze.User};(y=p.createElement(P)).type='text/javascript';
         y.src='https://js.appboycdn.com/web-sdk/4.3/braze.min.js';
@@ -18,12 +45,9 @@
 <div class="form">
     <form id="submitForm" onsubmit="return false">
 
+
         <div>
-            <label size="0.875rem" color="#5d5d65">Name</label>
-            <input aria-label="Name" id="name" maxlength="200" id="name" type="text" class="email-input" />
-        </div>
-        <div>
-            <label size="0.875rem" color="#5d5d65">Email <span class="iFTUZ">*</span></label>
+            <label style="color:#5d5d65;">Email <span class="iFTUZ">*</span></label>
             <input autocomplete="Email" id="email" aria-label="Email" maxlength="200" id="email" required type="email" class="email-input" />
         </div>
         <button onclick="event.preventDefault(); sendMessage()" class="submit-button">Sign up</button>
@@ -34,35 +58,42 @@
 
 <script type="text/javascript">
 
-    // initialize the SDK for CamdenWeb
-    braze.initialize('8a7ba213-9ea9-44a6-9d6b-0a76855feae8', {
-        baseUrl: 'sdk.iad-05.braze.com',
-        "allowUserSuppliedJavascript": true,
-        "enableLogging": true,
-    });
-
-    braze.openSession();
-
-    const sendMessage = () => {
-
-        let name = document.getElementById('name').value;
-        let email = document.getElementById('email').value;
-
-        braze.changeUser(name);
-        console.log('---->>>> email: ', email);
-        /*** call to TD to see if email is already subscribed goes here ***/
-
-        /***if user's not already subscribed then***/
-
-        braze.getUser().setEmail(email);
-        braze.getUser().setFirstName(name);
-        /****  added by AZH 10/20 *****/
-        /**** adds user to azh_testing_group email test group in braze ***/
-        braze.getUser().addToSubscriptionGroup('a5445b60-f405-46fc-9fb1-db2f95b94926');
-        /**** end add ****/
-        braze.requestImmediateDataFlush();
-        document.cookie = "ZephrNL=true; path=/; max-age=" + 1*365*24*60*60;
-        console.log('--->>>> ZaphrNL = TRUE');
+    function emailIsValid(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }
 
+    const sendMessage = () => {
+        let auth0_id, emailAddress, newsletterName
+        newsletterName = document.getElementByID('newsletterName').innerHTML();
+        emailAddress = document.getElementById('email').value;
+        if(emailIsValid(emailAddress)){
+        console.log('---->>>> email: ', emailAddress);
+        if(td !== null){
+            auth0_id = td.client['globals']['pageviews']['auth0_id']
+        }
+        if(auth0_id){
+            braze.changeUser(auth0_id)
+        } else {
+            braze.getUser().addAlias(emailAddress)
+        }
+        braze.getUser().setEmail(emailAddress)
+
+        //braze.getUser().addToSubscriptionGroup(TODO ADD SUBGROUP)
+
+        braze.getUser().setEmailNotificationSubscriptionType("opted_in")
+        td.trackEvent('newsletter_form_signup', {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 'w', 'newsletters':[newsletterName]});
+        document.cookie = "ZephrNL=true; path=/; max-age=" + 1*365*24*60*60;
+        console.log('--->>>> ZephrNL = TRUE');
+        window.location.reload();
+    } else {
+        document.getElementById('email').value = "Please Enter a Valid Email Address"
+        }
+    }
+
+
 </script>
+
+
+
+</body>
+</html>

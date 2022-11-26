@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="braze" level="project" />
     <orderEntry type="library" name="Handlebars" level="project" />
+    <orderEntry type="library" name="treasuredata" level="project" />
   </component>
 </module>

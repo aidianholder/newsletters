@@ -6,14 +6,15 @@
     <style>
 
         h1.formTitle {font-size: 24px; text-align:center; letter-spacing: -1px; line-height: 1.17; font-weight: 900; font-family: Lato, sans-serif; color: rgb(67, 77, 93); padding:1rem;}
-        .formBackground {background: rgb(255,255,255); border-radius: 0.3125rem; max-width: 35.25rem; margin: 0 auto; padding: 2.5rem 2.75rem; position: relative;}
+        .formBackground {background: rgb(255,255,255); border-radius: 0.3125rem; max-width: 52.875rem; margin: 0 auto; padding: 2.5rem 2.75rem; position: relative;}
         .formBody {line-height: 1.1875; font-family: Lato, sans-serif; color: #6b6b6b; }
         .test-grid {max-width: 900px; display: flex; justify-content: start; gap: 3px; align-items: baseline; margin-bottom: 1rem;}
         div.test-grid input {min-height: unset;}
+        .test-grid label {font-weight: 600; font-size: 1.1em;}
         .modal {visibility: hidden; opacity: 0; transition: all 0.35s ease-in;}
         .modal.is-visible {visibility: visibile; opacity: 1;}
         #newsletters {margin-bottom: 2rem;padding:1rem;}
-        #signupButton {background-color: rgb(2, 116, 183);border: none;border-radius: 3px;color: rgb(255, 255, 255);display: inline-block;font-family: Helvetica, Arial, sans-serif;font-size: 1rem;font-style: normal;font-weight: 700;line-height: 1;outline: 0;padding: 0.75rem 1.5rem;text-decoration: none;transition: background-color 0.1s ease-in 0s, box-shadow 0.1s ease-in 0s; box-shadow: 0 0 .25rem rgba(51,51,51,.2);height: 2.5rem;}
+        #signupButton {background-color: /*#d8232b*/rgb(216, 35, 14);border: none;border-radius: 3px;color: rgb(255, 255, 255);display: inline-block;font-family: Helvetica, Arial, sans-serif;font-size: 1rem;font-style: normal;font-weight: 700;line-height: 1;outline: 0;padding: 0.75rem 1.5rem;text-decoration: none;transition: background-color 0.1s ease-in 0s, box-shadow 0.1s ease-in 0s; box-shadow: 0 0 .25rem rgba(51,51,51,.2);height: 2.5rem;}
         .modal {position: fixed;top: 0;left: 0;right: 0;bottom: 0;display: flex;align-items: center;justify-content: center;padding: 1rem;background: rgba(0,0,0,0.8);cursor: pointer;visibility: visible;opacity: 0;transition: all 0.35s ease-in;}
         .modal-dialog {position: relative;max-width: 800px;max-height: 80vh;border-radius: 5px;background: rgba(255,255,255,1);overflow: auto;cursor: default; font-family: Lato, sans-serif;}
         .modal-dialog > * {padding: 1rem;}
@@ -24,8 +25,11 @@
         .modal p + p {margin-top: 1rem;}
         .modal {visibility: hidden;opacity: 0;transition: all 0.35s ease-in;}
         .modal.is-visible {visibility: visible;opacity: 1;}
+        .modal-content p {font-family: 'Times New Roman', serif; font-size: 0.8em; font-style: italic;}
         p.newsletterCopy {margin-top:0;}
         .newsletterWrapper {border-bottom: rgba(201,201,201,0.7) 1px solid; margin-bottom: 1rem;padding-bottom: 1rem;}
+        input:focus-visible {outline-color: rgb(216, 35, 14);}
+
 
     </style>
     <script>
@@ -35,7 +39,9 @@
 
     <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/scripts/handlebars-v4.7.7.js"></script>
     <script>
-        let site = window.location.host.split('.')[1]
+        let siteSplit = window.location.host.split('.')
+        let site = (siteSplit[0] === 'www' ? siteSplit[1] : siteSplit[0]);
+        //let site = window.location.host.split('.')[1]
         let scriptSource = "https://wehco.media.clients.ellingtoncms.com/static-4/newsletter_details/" + site + "_newsletters.js"
         jsElement = document.createElement('script')
         jsElement.src = scriptSource
@@ -49,6 +55,10 @@
             y.async=1;(b=p.getElementsByTagName(P)[0]).parentNode.insertBefore(y,b)
         }(window,document,'script');
     </script>
+    <script type="text/javascript">
+        !function(t,e){if(void 0===e[t]){e[t]=function(){e[t].clients.push(this),this._init=[Array.prototype.slice.call(arguments)]},e[t].clients=[];for(var r=["addRecord","blockEvents","fetchServerCookie","fetchGlobalID","fetchUserSegments","resetUUID","ready","setSignedMode","setAnonymousMode","set","trackEvent","trackPageview","trackClicks","unblockEvents"],s=0;s<r.length;s++){var c=r[s];e[t].prototype[c]=function(t){return function(){return this["_"+t]=this["_"+t]||[],this["_"+t].push(Array.prototype.slice.call(arguments)),this}}(c)}var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.treasuredata.com/sdk/3.1/td.min.js";var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(n,o)}}("Treasure",this);
+    </script>
+    <!--<script src="../../Desktop/texarkanagazette_newsletters.js"></script>-->
 
 </head>
 <body>
@@ -58,7 +68,7 @@
     <div>
         <form class="formBody">
             <div style="margin-bottom: 1rem;">
-                <label size="0.875rem" color="#5d5d65">Email <span>*</span></label>
+                <label size="0.875rem" color="#5d5d65">Your Email Address<span>*</span></label>
                 <input autocomplete="Email" name="Email" id="fieldEmail" maxlength="200" required type="email" style="width:100%;"/>
             </div>
 
@@ -96,10 +106,12 @@
 
     {{#each this}}
         <div class='newsletterWrapper' size="small" >
+
             <div class="test-grid">
                 <input type="checkbox" name="{{newsletterName}}" value="{{subscriptionGroupID}}" class="checkboxSelector" >
-                <label size="0.875rem" color="#5d5d65">{{newsletterName}}</label>
+                <label size="0.875rem" style="color:#5d5d65;">{{newsletterName}}</label>
             </div>
+
             {{#if this.newsletterCopy}}
                 <p class="newsletterCopy">{{this.newsletterCopy}}</p>
             {{/if}}
@@ -130,8 +142,6 @@
     handleSignup.subscribeList = Array()
     handleSignup.newsletterNames = Array()
 
-    //const checkboxes = document.querySelectorAll(".checkboxSelector")
-
     handleSignup.formButton = document.querySelector("#signupButton")
     handleSignup.formButton.addEventListener('click', function(evt) {
         evt.preventDefault();
@@ -141,9 +151,7 @@
 
 
     handleSignup.subscribeNewsletters = function() {
-        let userEmail
-        //let subscribeList = Array()
-        //let newsletterNames = Array()
+        let userEmail, auth0_id
         const checkboxes = document.querySelectorAll(".checkboxSelector")
         for (const checkbox of checkboxes) {
             if (checkbox.checked) {
@@ -152,13 +160,23 @@
             }
         }
         userEmail = document.querySelector("#fieldEmail").value
-        if (handleSignup.subscribeList.length > 0 && handleSignup.emailIsValid(userEmail))
+        if (td !== null){
+            auth0_id = td.client['globals']['pageviews']['auth0_id']
+            if(auth0_id){
+                braze.changeUser(auth0_id)
+            }
+        } else {
+            braze.getUser().addAlias(userEmail)
+        }
+        if (handleSignup.subscribeList.length > 0 && handleSignup.emailIsValid(userEmail)) {
             for (const newsletterID in handleSignup.subscribeList) {
                 braze.getUser().addToSubscriptionGroup(newsletterID)
             }
             braze.getUser().setEmail(document.querySelector("#fieldEmail").value)
             braze.getUser().setEmailNotificationSubscriptionType("opted_in")
+            document.cookie = "ZephrNL=true; path=/; max-age=" + 1 * 365 * 24 * 60 * 60;
             handleSignup.confirmationWindow(handleSignup.newsletterNames)
+        }
     }
 
     handleSignup.hideModal = function() {
@@ -174,8 +192,7 @@
             checkbox.checked = false
         }
         if (td !== null) {
-            /**do we ned to specify database in parameter?  How?**/
-            td.trackEvent("form_signup", handleSignup.buildPayload)
+            td.trackEvent("newsletter_form_signup", handleSignup.buildPayload())
         }
         document.querySelector("#fieldEmail").value = '';
         handleSignup.subscribeList.length = 0;
@@ -183,14 +200,12 @@
     }
 
 
-    handleSignup.buildPayload = function() {
-        let emailAddress, url, host, auth0_id, newsletters, payload
+    handleSignup.buildPayload = function(userIdentifier) {
+        let emailAddress, auth0_id, newsletters, payload
         emailAddress = document.querySelector("#fieldEmail").value
-        url = window.location.href
-        host = window.location.host
-        auth0_id = td.clinets.globals.pageviews.auth0_id
+        auth0_id = td.client['globals']['pageviews']['auth0_id']
         newsletters = handleSignup.newsletterNames
-        payload = {'email': emailAddress, 'url': url, 'host': host, 'auth0_id': auth0_id, newsletters}
+        payload = {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 's', 'newsletters':newsletters}
         return payload
     }
 
@@ -212,8 +227,6 @@
     handleSignup.emailIsValid = function(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }
-
-
 
 </script>
 

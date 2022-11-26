@@ -1,0 +1,15 @@
+let newsletterDetails =
+    [{"newsletterName":"Breaking News E-Mail NW","subscriptionGroupID":"5179afdc-ebf5-4e8c-9163-01ff6e514b1b","newsletterCopy":null},
+        {"newsletterName":"Business Update NW","subscriptionGroupID":"df9ed79c-a58d-4426-941d-227bf34dc449","newsletterCopy":null},
+        {"newsletterName":"Coronavirus Email","subscriptionGroupID":"cb5b7738-d51c-448a-b735-2c7bf08f0054","newsletterCopy":null},
+        {"newsletterName":"Crime and Courts Newsletter","subscriptionGroupID":"7624dc31-1459-453b-b9e9-9e3d6976c1c8","newsletterCopy":null},
+        {"newsletterName":"NW Editorial Email","subscriptionGroupID":"26bd12e6-d298-4205-9f6a-9773d0628258","newsletterCopy":null},
+        {"newsletterName":"Election 2020","subscriptionGroupID":"503d850b-de99-4bd2-b302-62a741dbc389","newsletterCopy":null},
+        {"newsletterName":"NWA Food Email","subscriptionGroupID":"89199f7c-978c-4d3f-893a-0d5eeb205082","newsletterCopy":null},
+        {"newsletterName":"Midday E-Mail Update NW","subscriptionGroupID":"f16b54c8-752d-42cb-bd3c-4cd22483442a","newsletterCopy":null},
+        {"newsletterName":"Morning E-Mail Update NW","subscriptionGroupID":"b9a18f36-81ec-4933-a884-60284f71d122","newsletterCopy":null},
+        {"newsletterName":"NWA Food Email test","subscriptionGroupID":"89199f7c-978c-4d3f-893a-0d5eeb205082","newsletterCopy":null},
+        {"newsletterName":"NWA Outdoors","subscriptionGroupID":"b9a038e5-0396-44aa-a234-66db007d50ae","newsletterCopy":null},
+        {"newsletterName":"Prep Sports NWA email","subscriptionGroupID":"d0268029-2a35-4da5-9d22-703789a10092","newsletterCopy":null},
+        {"newsletterName":"River Valley Newsletter","subscriptionGroupID":"29e58687-356b-47fb-bfac-0e51dfb40432","newsletterCopy":null},
+        {"newsletterName":"What's Up! NWA","subscriptionGroupID":"8a3dc28a-ee8d-4241-b21b-caab93741147","newsletterCopy":null}]
