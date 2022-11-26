@@ -1,0 +1,8 @@
+node_modules
+*.log
+.DS_Store
+dist/loader.*
+dist/*.gz
+test/consentmanager
+.idea
+js-sdk-api.md
