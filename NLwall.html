@@ -6,15 +6,14 @@
     <style>
         .submit-button {
             cursor: pointer;
-            background-color: rgb(2, 116, 183);
-            border-radius: 10px;
+            background-color: rgb(255,255,255);
+            /*border-radius: 10px;*/
             border-color: rgb(255, 255, 255);
-            color: rgb(255, 255, 255);
+            /*color: rgb(255, 255, 255);*/
             display: inline-block;
             font-family: Helvetica, Arial, sans-serif;
             font-size: 0.8rem;
             font-style: normal;
-            /*font-weight: 700;*/
             line-height: 1;
             outline: 0;
             padding: 0.25rem 1.5rem;
@@ -29,14 +28,15 @@
             display:flex;
             align-items:center;
             justify-content: flex-end;
-            max-width: 520px;
+            max-width: 510px;
+            margin: 0 1em;
         }
 
         .email-input {
             margin-bottom: 1rem;
         }
 
-        .nlForm {
+        #nlForm {
             background-color: #075F96;
         }
 
@@ -44,7 +44,7 @@
 
         #nlTease {
             display: block;
-            width: 360px;
+            width: 100%;
             margin: 0 auto;
         }
 
@@ -70,7 +70,7 @@
         }
 
         #submitForm input {
-            flex-grow: 3;
+            flex-grow: 2;
             margin-bottom: 1rem;
         }
 
@@ -79,6 +79,8 @@
             color: rgb(255, 255, 255);
             text-align: center;
             font-size: 0.9em;
+            line-height: 1em;
+            padding: 1em;
         }
 
         label {
@@ -99,17 +101,17 @@
     }(window,document,'script');
 </script>
 
-<div class="nlForm">
-    <img id="nlTease" src="https://wehco.media.clients.ellingtoncms.com/static-4/img/newsletter_meter.png" />
+<div class="bee-page-container" id="nlForm">
 
     <form id="submitForm" onsubmit="return false">
+        <img id="nlTease" src="https://wehco.media.clients.ellingtoncms.com/static-4/img/newsletter_meter.png" />
 
         <p class="nlTeaseText">To continue reading, join the thousands that already get our daily newsletter.</p>
 
 
         <div id="nlWrap">
             <input autocomplete="Email" placeholder="Enter your email address" maxlength="200" id="email" required type="email" class="email-input" />
-            <button onclick="event.preventDefault(); sendMessage()" class="submit-button">Sign up</button>
+            <button onclick="event.preventDefault(); sendMessage()" class="submit-button">Sign&nbsp;up!</button>
         </div>
         <div id='form-message'></div>
     </form>

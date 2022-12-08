@@ -39,9 +39,26 @@
 
     <script type="text/javascript" src="https://wehco.media.clients.ellingtoncms.com/static-4/scripts/handlebars-v4.7.7.js"></script>
     <script>
-        let siteSplit = window.location.host.split('.')
+        const hostname = window.location.host
+
+        let customAttributeLookup = {
+            "www.arkansasonline.com":"ADGNewsletters",
+            "www.camdenarknews.com":"CNNewsletters",
+            "www.eldoradonews.com":"ELDNewsletters",
+            "www.fultonsun.com":"FSNewsletters",
+            "www.newstribune.com":"NTNewsletters",
+            "www.nwaonline.com":"NWADGNewsletters",
+            "www.hotsr.com":"SRNewsletters",
+            "www.timesfreepress.com":"TFPNewsletters",
+            "www.texarkanagazetter.com":"TGNewsletters",
+            "www.wholehogsports.com":"WHSNewsletters",
+            "bvwv.nwaonline.com":"BNNewsletters"
+        }
+
+        let customAttributeValue = customAttributeLookup[hostname]
+
+        let siteSplit = hostname.split('.')
         let site = (siteSplit[0] === 'www' ? siteSplit[1] : siteSplit[0]);
-        //let site = window.location.host.split('.')[1]
         let scriptSource = "https://wehco.media.clients.ellingtoncms.com/static-4/newsletter_details/" + site + "_newsletters.js"
         jsElement = document.createElement('script')
         jsElement.src = scriptSource
@@ -108,8 +125,8 @@
         <div class='newsletterWrapper' size="small" >
 
             <div class="test-grid">
-                <input type="checkbox" name="{{newsletterName}}" value="{{subscriptionGroupID}}" class="checkboxSelector" >
-                <label size="0.875rem" style="color:#5d5d65;">{{newsletterName}}</label>
+                <input type="checkbox" name="{{displayName}}" value="{{newsletterName}}" class="checkboxSelector" >
+                <label size="0.875rem" style="color:#5d5d65;">{{displayName}}</label>
             </div>
 
             {{#if this.newsletterCopy}}
@@ -151,11 +168,12 @@
 
 
     handleSignup.subscribeNewsletters = function() {
-        let userEmail, auth0_id
+        let userEmail, auth0_id, newsletterString
         const checkboxes = document.querySelectorAll(".checkboxSelector")
         for (const checkbox of checkboxes) {
             if (checkbox.checked) {
                 handleSignup.subscribeList.push(checkbox.value)
+                console.log("subscribeList = " + handleSignup.subscribeList)
                 handleSignup.newsletterNames.push(checkbox.name)
             }
         }
@@ -166,11 +184,14 @@
                 braze.changeUser(auth0_id)
             }
         } else {
-            braze.getUser().addAlias(userEmail)
+            braze.getUser().addAlias(userEmail, "email")
         }
         if (handleSignup.subscribeList.length > 0 && handleSignup.emailIsValid(userEmail)) {
             for (const newsletterID in handleSignup.subscribeList) {
-                braze.getUser().addToSubscriptionGroup(newsletterID)
+                console.log(handleSignup.subscribeList[newsletterID])
+                newsletterString = handleSignup.subscribeList[newsletterID] + "==>Yes"
+                console.log("newsletterString = " + newsletterString)
+                braze.getUser().addToCustomAttributeArray(customAttributeValue, newsletterString)
             }
             braze.getUser().setEmail(document.querySelector("#fieldEmail").value)
             braze.getUser().setEmailNotificationSubscriptionType("opted_in")
