@@ -50,9 +50,16 @@
             "www.nwaonline.com":"NWADGNewsletters",
             "www.hotsr.com":"SRNewsletters",
             "www.timesfreepress.com":"TFPNewsletters",
-            "www.texarkanagazetter.com":"TGNewsletters",
+            "www.texarkanagazette.com":"TGNewsletters",
             "www.wholehogsports.com":"WHSNewsletters",
-            "bvwv.nwaonline.com":"BNNewsletters"
+            "www.magnoliabannernews.com":"BNNewsletters",
+            "bvwv.nwaonline.com":"BVNewsletters",
+            "www.laprensalibrear.com":"LPNewsletters",
+            "mdcp.nwaonline.com":"MCPNewsletters",
+            "prt.nwaonline.com":"PRNewsletters",
+            "hl.nwaonline.com":"HLNewsletters",
+            "wcel.nwaonline.com":"WCNewsletters",
+            "www.eagleobserver.com":"WEONewsletters"
         }
 
         let customAttributeValue = customAttributeLookup[hostname]
@@ -147,12 +154,18 @@
 </script>
 
 <script>
-    braze.initialize('8a7ba213-9ea9-44a6-9d6b-0a76855feae8', {
+    /*braze.initialize('8a7ba213-9ea9-44a6-9d6b-0a76855feae8', {
         baseUrl: 'sdk.iad-05.braze.com',
         "allowUserSuppliedJavascript": true,
         "enableLogging": true,
-    });
-
+    });*/
+    function wait(ms){
+        let start = new Date().getTime();
+        let end = start;
+        while(end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
 
     let handleSignup = {}
 
@@ -163,21 +176,23 @@
     handleSignup.formButton.addEventListener('click', function(evt) {
         evt.preventDefault();
         handleSignup.subscribeNewsletters()
-        console.log(handleSignup)
+        //console.log(handleSignup)
     })
 
 
     handleSignup.subscribeNewsletters = function() {
-        let userEmail, auth0_id, newsletterString
-        const checkboxes = document.querySelectorAll(".checkboxSelector")
-        for (const checkbox of checkboxes) {
-            if (checkbox.checked) {
-                handleSignup.subscribeList.push(checkbox.value)
-                console.log("subscribeList = " + handleSignup.subscribeList)
-                handleSignup.newsletterNames.push(checkbox.name)
-            }
-        }
+        let userEmail // auth0_id, newsletterString
         userEmail = document.querySelector("#fieldEmail").value
+        if(emailIsValid(userEmail)) {
+            const checkboxes = document.querySelectorAll(".checkboxSelector")
+            for (const checkbox of checkboxes) {
+                if (checkbox.checked) {
+                    handleSignup.subscribeList.push(checkbox.value)
+                    console.log("subscribeList = " + handleSignup.subscribeList)
+                    handleSignup.newsletterNames.push(checkbox.name)
+                }
+            }
+            /*userEmail = document.querySelector("#fieldEmail").value
         if (td !== null){
             auth0_id = td.client['globals']['pageviews']['auth0_id']
             if(auth0_id){
@@ -195,9 +210,13 @@
             }
             braze.getUser().setEmail(document.querySelector("#fieldEmail").value)
             braze.getUser().setEmailNotificationSubscriptionType("opted_in")
-            document.cookie = "ZephrNL=true; path=/; max-age=" + 1 * 365 * 24 * 60 * 60;
+         */
+
             handleSignup.confirmationWindow(handleSignup.newsletterNames)
+        } else {
+            document.querySelector("#fieldEmail").value = "Please enter a valid email address."
         }
+        //}
     }
 
     handleSignup.hideModal = function() {
@@ -214,19 +233,35 @@
         }
         if (td !== null) {
             td.trackEvent("newsletter_form_signup", handleSignup.buildPayload())
+        } else {
+            wait(5000)
+            td.trackEvent("newsletter_form_signup", handleSignup.buildPayload())
         }
+        document.cookie = "ZephrNL=true; path=/; max-age=" + 1 * 365 * 24 * 60 * 60;
         document.querySelector("#fieldEmail").value = '';
         handleSignup.subscribeList.length = 0;
         handleSignup.newsletterNames.length = 0;
     }
 
 
-    handleSignup.buildPayload = function(userIdentifier) {
-        let emailAddress, auth0_id, newsletters, payload
+    handleSignup.buildPayload = function() {
+        let emailAddress, auth0_id, newsletters, payload, newslettersJSON, nlNumber, newsletter
         emailAddress = document.querySelector("#fieldEmail").value
         auth0_id = td.client['globals']['pageviews']['auth0_id']
-        newsletters = handleSignup.newsletterNames
-        payload = {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 's', 'newsletters':newsletters}
+        newslettersJSON = "{" + customAttributeValue + ":["
+        console.log("newslettersJSON = " + newslettersJSON)
+        newsletters = handleSignup.subscribeList
+        nlNumber = newsletters.length - 1
+        console.log("nlNumber = " + nlNumber)
+        newsletters.forEach(function(element, index){
+            newsletter = '{"' + element + '":"Yes"}'
+            index < nlNumber ? newsletter += ",": newsletter += "]}"
+            console.log("index = " + index)
+            newslettersJSON += newsletter;
+            console.log("newslettersJSON = " + newslettersJSON)
+        })
+        payload = {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 's', 'newsletters':newslettersJSON}
+        console.log(payload)
         return payload
     }
 
@@ -240,8 +275,8 @@
         }
         const modalBody = document.querySelector("#modal1")
         modalBody.classList.add("is-visible")
-        const modalClose = document.querySelector(".close-modal")
-        modalClose.addEventListener('click', handleSignup.hideModal)
+        //const modalClose = document.querySelector(".close-modal")
+        //modalClose.addEventListener('click', handleSignup.hideModal)
         modalBody.addEventListener('click', handleSignup.hideModal)
     }
 

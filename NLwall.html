@@ -104,9 +104,9 @@
 <div class="bee-page-container" id="nlForm">
 
     <form id="submitForm" onsubmit="return false">
-        <img id="nlTease" src="https://wehco.media.clients.ellingtoncms.com/static-4/img/newsletter_meter.png" />
+        <img id="nlTease" src="https://wehco.media.clients.ellingtoncms.com/static-4/wehco_marketing/newsletter_meter.png" />
 
-        <p class="nlTeaseText">To continue reading, join the thousands that already get our daily newsletter.</p>
+        <p class="nlTeaseText">Continue reading by joining thousands that already get our daily newsletter.</p>
 
 
         <div id="nlWrap">
@@ -129,26 +129,26 @@
         newsletterName = document.getElementByID('newsletterName').innerHTML();
         emailAddress = document.getElementById('email').value;
         if(emailIsValid(emailAddress)){
-        console.log('---->>>> email: ', emailAddress);
-        if(td !== null){
-            auth0_id = td.client['globals']['pageviews']['auth0_id']
-        }
-        if(auth0_id){
-            braze.changeUser(auth0_id)
+            console.log('---->>>> email: ', emailAddress);
+            if(td !== null){
+                auth0_id = td.client['globals']['pageviews']['auth0_id']
+            }
+            if(auth0_id){
+                braze.changeUser(auth0_id)
+            } else {
+                braze.getUser().addAlias(emailAddress)
+            }
+            braze.getUser().setEmail(emailAddress)
+
+            //braze.getUser().addToSubscriptionGroup(TODO ADD SUBGROUP)
+
+            braze.getUser().setEmailNotificationSubscriptionType("opted_in")
+            td.trackEvent('newsletter_form_signup', {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 'w', 'newsletters':[newsletterName]});
+            document.cookie = "ZephrNL=true; path=/; max-age=" + 1*365*24*60*60;
+            console.log('--->>>> ZephrNL = TRUE');
+            window.location.reload();
         } else {
-            braze.getUser().addAlias(emailAddress)
-        }
-        braze.getUser().setEmail(emailAddress)
-
-        //braze.getUser().addToSubscriptionGroup(TODO ADD SUBGROUP)
-
-        braze.getUser().setEmailNotificationSubscriptionType("opted_in")
-        td.trackEvent('newsletter_form_signup', {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 'w', 'newsletters':[newsletterName]});
-        document.cookie = "ZephrNL=true; path=/; max-age=" + 1*365*24*60*60;
-        console.log('--->>>> ZephrNL = TRUE');
-        window.location.reload();
-    } else {
-        document.getElementById('email').value = "Please Enter a Valid Email Address"
+            document.getElementById('email').value = "Please Enter a Valid Email Address"
         }
     }
 
