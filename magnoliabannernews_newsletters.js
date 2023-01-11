@@ -1,0 +1,4 @@
+let newsletterDetails = [{"displayName":"Daily Email - Magnolia","newsletterName":"daily_email_-_magnolia","newsletterCopy":"The day's top stories sent straight to your inbox."},
+    {"displayName":"Breaking News Email - Magnolia","newsletterName":"breaking_news_email_-_magnolia","newsletterCopy":"Breaking news updates from The Banner News."},
+    {"displayName":"Curious Chronicles Magnolia News","newsletterName":"curious_chronicles_magnolia_news","newsletterCopy":"A collection of odd stories from the last week."},
+    {"displayName":"Weekly Email - Magnolia","newsletterName":"weekly_email_-_magnolia","newsletterCopy":""}]

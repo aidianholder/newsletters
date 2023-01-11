@@ -154,11 +154,12 @@
 </script>
 
 <script>
-    /*braze.initialize('8a7ba213-9ea9-44a6-9d6b-0a76855feae8', {
+    braze.initialize('8a7ba213-9ea9-44a6-9d6b-0a76855feae8', {
         baseUrl: 'sdk.iad-05.braze.com',
         "allowUserSuppliedJavascript": true,
         "enableLogging": true,
-    });*/
+    });
+
     function wait(ms){
         let start = new Date().getTime();
         let end = start;
@@ -181,9 +182,9 @@
 
 
     handleSignup.subscribeNewsletters = function() {
-        let userEmail // auth0_id, newsletterString
+        let userEmail, auth0_id, newsletterString
         userEmail = document.querySelector("#fieldEmail").value
-        if(emailIsValid(userEmail)) {
+        if(handleSignup.emailIsValid(userEmail)) {
             const checkboxes = document.querySelectorAll(".checkboxSelector")
             for (const checkbox of checkboxes) {
                 if (checkbox.checked) {
@@ -192,31 +193,32 @@
                     handleSignup.newsletterNames.push(checkbox.name)
                 }
             }
-            /*userEmail = document.querySelector("#fieldEmail").value
-        if (td !== null){
-            auth0_id = td.client['globals']['pageviews']['auth0_id']
-            if(auth0_id){
-                braze.changeUser(auth0_id)
+            userEmail = document.querySelector("#fieldEmail").value
+            if (td !== null) {
+                auth0_id = td.client['globals']['pageviews']['auth0_id']
+                if (auth0_id) {
+                    braze.changeUser(auth0_id)
+                }
+            } else {
+                braze.getUser().addAlias(userEmail, "email")
             }
-        } else {
-            braze.getUser().addAlias(userEmail, "email")
-        }
-        if (handleSignup.subscribeList.length > 0 && handleSignup.emailIsValid(userEmail)) {
-            for (const newsletterID in handleSignup.subscribeList) {
-                console.log(handleSignup.subscribeList[newsletterID])
-                newsletterString = handleSignup.subscribeList[newsletterID] + "==>Yes"
-                console.log("newsletterString = " + newsletterString)
-                braze.getUser().addToCustomAttributeArray(customAttributeValue, newsletterString)
-            }
-            braze.getUser().setEmail(document.querySelector("#fieldEmail").value)
-            braze.getUser().setEmailNotificationSubscriptionType("opted_in")
-         */
+            if (handleSignup.subscribeList.length > 0 && handleSignup.emailIsValid(userEmail)) {
+                for (const newsletterID in handleSignup.subscribeList) {
+                    console.log(handleSignup.subscribeList[newsletterID])
+                    newsletterString = handleSignup.subscribeList[newsletterID] + "==>Yes"
+                    console.log("newsletterString = " + newsletterString)
+                    braze.getUser().addToCustomAttributeArray(customAttributeValue, newsletterString)
+                }
+                braze.getUser().setEmail(document.querySelector("#fieldEmail").value)
+                braze.getUser().setEmailNotificationSubscriptionType("opted_in")
 
-            handleSignup.confirmationWindow(handleSignup.newsletterNames)
-        } else {
-            document.querySelector("#fieldEmail").value = "Please enter a valid email address."
+
+                handleSignup.confirmationWindow(handleSignup.newsletterNames)
+            } else {
+                document.querySelector("#fieldEmail").value = "Please enter a valid email address."
+            }
         }
-        //}
+
     }
 
     handleSignup.hideModal = function() {
@@ -245,22 +247,24 @@
 
 
     handleSignup.buildPayload = function() {
-        let emailAddress, auth0_id, newsletters, payload, newslettersJSON, nlNumber, newsletter
+        let emailAddress, auth0_id, newsletters, payload, newslettersJSON, nlNumber, newsletter, columnName
         emailAddress = document.querySelector("#fieldEmail").value
         auth0_id = td.client['globals']['pageviews']['auth0_id']
-        newslettersJSON = "{" + customAttributeValue + ":["
+        newslettersJSON = new Array
+        //columnName = customAttributeValue.toString()
+        //"{" + customAttributeValue + ":["
         console.log("newslettersJSON = " + newslettersJSON)
         newsletters = handleSignup.subscribeList
         nlNumber = newsletters.length - 1
         console.log("nlNumber = " + nlNumber)
         newsletters.forEach(function(element, index){
-            newsletter = '{"' + element + '":"Yes"}'
-            index < nlNumber ? newsletter += ",": newsletter += "]}"
+            newsletter = '"' + element + '==>yes"'
+            //index < nlNumber ? newsletter += ",": newsletter += "]}"
             console.log("index = " + index)
-            newslettersJSON += newsletter;
+            newslettersJSON.push(newsletter)// += newsletter;
             console.log("newslettersJSON = " + newslettersJSON)
         })
-        payload = {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 's', 'newsletters':newslettersJSON}
+        payload = {'email': emailAddress, 'auth0_id': auth0_id, 'stype': 's', [customAttributeValue]: newslettersJSON}
         console.log(payload)
         return payload
     }
